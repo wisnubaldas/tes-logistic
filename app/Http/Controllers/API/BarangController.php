@@ -31,25 +31,45 @@ class BarangController extends Controller
         return Barang::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * @OA\Post(
+    *     security={{"apiAuth":{}}},
+    *     path="/api/barang",
+    *     summary="Create Barang",
+    *     tags={"Barang"},
+    *     operationId="createBarang",
+    * @OA\RequestBody(
+ *        description="Request body parameter",
+ *        required=true,
+ *        @OA\MediaType(
+ *             mediaType="application/json",
+ *              @OA\Schema(ref="#/components/schemas/Barang"),
+ *          )
+ *     ),  
+    *  @OA\Response(
+    *     response=200,
+    *     description="Create Barang",
+    * @OA\JsonContent(
+    *           @OA\Property(property="message", type="string", example="sukses create barang")
+    *        )
+    *   ),
+    *   @OA\Response(response="401",description="Unauthorized"),
+    * )
+    */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'satuan_id'=>'required|integer',
+            'kd_barang'=>'required|unique:barangs',
+            'nama'=>'required',
+            'harga'=>'required',
+            'gambar'=>'required',
+            'qr'=>'required',
+            'qty'=>'required|integer'
+        ]);
+        Barang::create($request->all());
+        return response()->json(['message'=>'sukses create barang']);
     }
     // @OA\Property(property="data", type="object", ref="#/components/schemas/Barang")
     /**

@@ -142,6 +142,50 @@
                         "apiAuth": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Create Barang",
+                "operationId": "createBarang",
+                "requestBody": {
+                    "description": "Request body parameter",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Barang"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create Barang",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "sukses create barang"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
             }
         },
         "/api/barang/{any}": {
@@ -346,7 +390,7 @@
                 "properties": {
                     "satuan_id": {
                         "description": "id satuan",
-                        "type": "string",
+                        "type": "integer",
                         "format": "satuan_id"
                     },
                     "kd_barang": {
@@ -371,8 +415,13 @@
                     },
                     "qty": {
                         "description": "quantity barang",
-                        "type": "string",
+                        "type": "integer",
                         "format": "qty"
+                    },
+                    "gambar": {
+                        "description": "Link gambar",
+                        "type": "string",
+                        "format": "gambar"
                     }
                 },
                 "type": "object"
