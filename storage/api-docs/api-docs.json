@@ -1,0 +1,507 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Test Logistic",
+        "description": "REST API PT X ",
+        "contact": {
+            "name": "wisnubaldas"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Api Logistic Backend"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "description": "Login dengan user account untuk mendapatkan auth token agar aplikasi tetap terhubung gunakan token pada header ",
+                "operationId": "signin",
+                "requestBody": {
+                    "description": "Dibutuhkan login untuk memulai session aplikasi",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "User email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": {
+                                                "token": "13|Y7jXDOh4dAnAEreE0QcP4BGnWPjgTftkXOaON9ct",
+                                                "name": "Admin"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User signed in"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Sukses logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/barang": {
+            "get": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Get all barang",
+                "operationId": "getAllBarang",
+                "responses": {
+                    "200": {
+                        "description": "All barang",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Barang"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/barang/{any}": {
+            "get": {
+                "tags": [
+                    "Barang"
+                ],
+                "summary": "Show barang",
+                "operationId": "showBarang",
+                "parameters": [
+                    {
+                        "name": "any",
+                        "in": "path",
+                        "description": "apapun data yg di input akan di cari",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show barang",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Barang"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/report": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Show all report",
+                "operationId": "allReport",
+                "responses": {
+                    "200": {
+                        "description": "Show all report",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Report"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/report/{date}": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Show report by date",
+                "operationId": "bydateReport",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "date report",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show report by date",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Report"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/transaksi": {
+            "get": {
+                "tags": [
+                    "Transaksi"
+                ],
+                "summary": "Show transaksi",
+                "operationId": "allTransaksi",
+                "responses": {
+                    "200": {
+                        "description": "Show transaksi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaksi"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/transaksi/{id}": {
+            "get": {
+                "tags": [
+                    "Transaksi"
+                ],
+                "summary": "Show transaksi",
+                "operationId": "showTransaksi",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "kalo ini berdasarkan id transaksi",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show transaksi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaksi"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Barang": {
+                "title": "Barang model",
+                "description": "Barang model",
+                "properties": {
+                    "satuan_id": {
+                        "description": "id satuan",
+                        "type": "string",
+                        "format": "satuan_id"
+                    },
+                    "kd_barang": {
+                        "description": "kode barang",
+                        "type": "string",
+                        "format": "kd_barang"
+                    },
+                    "nama": {
+                        "description": "nama barang",
+                        "type": "string",
+                        "format": "nama"
+                    },
+                    "harga": {
+                        "description": "harga barang",
+                        "type": "string",
+                        "format": "harga"
+                    },
+                    "qr": {
+                        "description": "qr barang",
+                        "type": "string",
+                        "format": "qr"
+                    },
+                    "qty": {
+                        "description": "quantity barang",
+                        "type": "string",
+                        "format": "qty"
+                    }
+                },
+                "type": "object"
+            },
+            "Report": {
+                "title": "Report model",
+                "description": "Report model",
+                "properties": {
+                    "id": {
+                        "description": "id report",
+                        "type": "integer",
+                        "format": "id"
+                    },
+                    "r_date": {
+                        "description": "tanggal report",
+                        "type": "string",
+                        "format": "r_date"
+                    },
+                    "tot_trans": {
+                        "description": "total transaksi per hari",
+                        "type": "integer",
+                        "format": "tot_trans"
+                    },
+                    "tot_order": {
+                        "description": "total order per hari",
+                        "type": "integer",
+                        "format": "tot_order"
+                    },
+                    "detail": {
+                        "description": "detail json string dari transaksi",
+                        "type": "object",
+                        "format": "detail"
+                    }
+                },
+                "type": "object"
+            },
+            "Transaksi": {
+                "title": "Transaksi model",
+                "description": "Transaksi model",
+                "properties": {
+                    "id": {
+                        "description": "id transaksi",
+                        "type": "integer",
+                        "format": "id"
+                    },
+                    "order_id": {
+                        "description": "id order",
+                        "type": "integer",
+                        "format": "order_id"
+                    },
+                    "customer_id": {
+                        "description": "id customer",
+                        "type": "integer",
+                        "format": "customer_id"
+                    },
+                    "barang_id": {
+                        "description": "id barang",
+                        "type": "integer",
+                        "format": "harga"
+                    },
+                    "owner_name": {
+                        "description": "nama pembeli",
+                        "type": "string",
+                        "format": "owner_name"
+                    },
+                    "cardbank_type": {
+                        "description": "tipe kartu kredit",
+                        "type": "string",
+                        "format": "cardbank_type"
+                    },
+                    "card_number": {
+                        "description": "nomer kartu kredit",
+                        "type": "string",
+                        "format": "card_number"
+                    },
+                    "payment_status": {
+                        "description": "status pembayaran",
+                        "type": "string",
+                        "format": "payment_status"
+                    },
+                    "total": {
+                        "description": "total barang yang dibeli",
+                        "type": "integer",
+                        "format": "total"
+                    },
+                    "order_valid_date": {
+                        "description": "tanggal valid transaksi",
+                        "type": "string",
+                        "format": "order_valid_date"
+                    },
+                    "order_valid_time": {
+                        "description": "jam valid transaksi",
+                        "type": "time",
+                        "format": "order_valid_time"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentication user login token"
+        },
+        {
+            "name": "Barang",
+            "description": "Data barang"
+        },
+        {
+            "name": "Transaksi",
+            "description": "Data transaksi"
+        },
+        {
+            "name": "Report",
+            "description": "Data report"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
