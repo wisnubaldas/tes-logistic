@@ -26,8 +26,8 @@ class BarangSeeder extends Seeder
         return [
             'satuan_id'=>$faker->randomDigitNotNull(),
             'kd_barang'=>$faker->numerify('BR-####'),
-            'nama'=>$faker->deviceModelName,
-            'harga'=>$faker->numerify('#######'),
+            'nama'=>$faker->productName,
+            'harga'=>$faker->randomDigitNotNull().$faker->numerify('###000'),
             'gambar'=>$faker->image(null, 640, 480),
             'qr'=>$faker->isbn13(),
             'qty'=>$faker->randomDigitNotNull(),
