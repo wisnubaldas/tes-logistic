@@ -28,3 +28,4 @@ php artisan serve
 ### Endpoint API
 - untuk melihat dokumentasi api, buka aplikasi dengan browser ```localhost:8000```
 - login aplikasi path ```localhost:8000/api/**``` 
+![enter image description here](https://github.com/wisnubaldas/tes-logistic/blob/51b36acf73bfdc8e51801ed2bc13e0e3e519a1d0/screenshot-localhost_8000-2022.03.26-13_57_59.png)
